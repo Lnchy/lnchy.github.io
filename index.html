@@ -96,11 +96,28 @@
 -->
 <script src="css/jquery-3.2.1.min.js"></script>
 <script>
+	//接受url参数
+	function GetQueryString(name)
+	{
+	     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	     var r = window.location.search.substr(1).match(reg);
+	     if(r!=null)return  unescape(r[2]); return null;
+	}
+	
 	$(function(){
-		$.get("GroupMembers.html",function(val){
-			$("#rightContent").html(val);
-			$("li:first").css("background","#009688");
-		});
+		//判断接受参数，如果没有参数，就直接显示小组成员
+		var $action = GetQueryString("action");
+		if($action==null || $action==1){
+			$.get("GroupMembers.html",function(val){
+				$("#rightContent").html(val);
+				$("li:first").css("background","#009688");
+			});
+		}else if($action==2){
+			//参数为2选择笔记
+			$("li:nth-child(2)").css("background","#009688");
+		}
+		
+		
 	});
 </script>
 </head>
