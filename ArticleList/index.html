@@ -3,33 +3,35 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>文章列表</title>
+		<link rel="stylesheet" href="css/md.css?v=1.0"/>
 		<style>
 			#fanhui{
-				width: 40px;
-				height: 40px;
+				width: 30px;
+				height: 30px;
 				background: url(css/return.png);
-				background-size: 40px 40px;
+				background-size: 30px 30px;
 				position: absolute;
 				top:10px;
 				cursor: pointer;
 			}
 		</style>
+		<script src="../css/showdown.min.js"></script>
 	</head>
 	<script>
-		//显示文章的犯法
+		//显示文章的方法
 		function show(val){
 			//隐藏文章列表
 			$("#Alist").fadeOut(100);
 			//显示文章
 			$("#wz").fadeIn(300);
 			$.get("ArticleList/list.html",function(data){
-				//反序
-				data.reverse();
 				//获取文章数据
 				var list = data[val];
 				//显示到页面中
 				$.get("ArticleList/atlist/"+list.content,function(val){
-					$("#wzcontent").html(val);
+					//初始化转换器
+					var converter = new showdown.Converter();
+					$("#wzcontent").html(converter.makeHtml(val));
 					$("#wztitle").text(list.title);
 					$("#wzdate").text(list.date);
 				});
@@ -37,8 +39,6 @@
 		}
 		$(function(){
 			$.get("ArticleList/list.html",function(data){
-				//反序
-				data.reverse();
 				$.each(data, function(i,v) {
 					var wburl = "ArticleList/atlist/"+v.content;
 					//通过ajax获取文本内容
@@ -69,11 +69,13 @@
 			<ul id="Alist" >
 			</ul>
 			
-			<div id="wz" style="width: 80%; margin: 0px auto;display: none;position: relative;">
+			<div id="wz" style="width: 90%; margin: 0px auto;display: none;position: relative;bottom: 0px;">
 				<div id="fanhui"></div>
 				<h1 id="wztitle" align="center"></h1>
 				<h5 id="wzdate" align="center" style="color: #666666;"></h5>
-				<p id="wzcontent"></p>
+				<hr>
+				<p id="wzcontent" style="min-height: 70%;"></p>
+				<hr>
 			</div>
 			
 		</div>

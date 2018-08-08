@@ -23,7 +23,8 @@
 		float: right;
 		width: 80%;
 		padding: 20px;
-		height: 100%;
+		height: auto;
+		min-height: 95%;
 		background-color: white;
 		animation: myLoad 0.5s linear;
 		
