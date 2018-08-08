@@ -1,0 +1,13 @@
+整理的一些快捷键<br>
+Ctrl+F			查找<br>
+Ctrl+Shift+F		全局查找<br>
+Ctrl+X			删除行<br>
+Ctrl+D			复制行<br>
+Ctrl+Shift+U		大小写转化<br>
+Ctrl+F9			生成项目<br>
+Ctrl+Backspace		按单词删除<br>
+Ctrl+Alt+Space		类名自动完成<br>
+Alt+left/right		切换代码视图<br>
+Alt+Up/Down		在方法间快速移动定位<br>
+Ctrl+空格		代码提示<br>
+Ctrl+Shift + Enter	语句完成<br>

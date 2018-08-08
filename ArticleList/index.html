@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>文章列表</title>
+		<style>
+			#fanhui{
+				width: 40px;
+				height: 40px;
+				background: url(css/return.png);
+				background-size: 40px 40px;
+				position: absolute;
+				top:10px;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<script>
+		//显示文章的犯法
+		function show(val){
+			//隐藏文章列表
+			$("#Alist").fadeOut(100);
+			//显示文章
+			$("#wz").fadeIn(300);
+			$.get("ArticleList/list.html",function(data){
+				//反序
+				data.reverse();
+				//获取文章数据
+				var list = data[val];
+				//显示到页面中
+				$.get("ArticleList/atlist/"+list.content,function(val){
+					$("#wzcontent").html(val);
+					$("#wztitle").text(list.title);
+					$("#wzdate").text(list.date);
+				});
+			},"json");
+		}
+		$(function(){
+			$.get("ArticleList/list.html",function(data){
+				//反序
+				data.reverse();
+				$.each(data, function(i,v) {
+					var wburl = "ArticleList/atlist/"+v.content;
+					//通过ajax获取文本内容
+					$.ajax({
+						type:"get",
+						url:wburl,
+						async:true,
+						success:function(retxt){
+							txt = retxt;
+							
+							var lb = "<a href='javascript:show("+i+")'><li id='"+i+"'><span class='liTitle'>"+v.title+"</span><span class='liContent'>"+txt.substr(0,60)+"</span><span class='liDate'>"+v.date+"</span></li></a>";
+							$("#arlist > ul").append(lb);
+						}
+					});
+				});
+			},"json");
+			
+			//点击隐藏文章并返回列表
+			$("#fanhui").click(function(){
+				$("#wz").fadeOut(300);
+				$("#Alist").fadeIn(300);
+			});
+			
+		})
+	</script>
+	<body>
+		<div id="arlist">
+			<ul id="Alist" >
+			</ul>
+			
+			<div id="wz" style="width: 80%; margin: 0px auto;display: none;position: relative;">
+				<div id="fanhui"></div>
+				<h1 id="wztitle" align="center"></h1>
+				<h5 id="wzdate" align="center" style="color: #666666;"></h5>
+				<p id="wzcontent"></p>
+			</div>
+			
+		</div>
+	</body>
+</html>

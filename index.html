@@ -3,97 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>我的主页</title>
-<style>
-	body{
-		margin: 0px;
-		padding: 0px;
-		height: 100%;
-		background: #F6F6F6;
-		font-family: "微软雅黑";
-	}
-	div{
-		
-	}
-	#leftDiv{
-		position: fixed;
-		width: 15%;
-		background: #282B33;
-		color: #fff;
-		height: 100%;
-		top: 0px;
-		left: 0px;
-		bottom: 0px;
-		animation: menuLoad 0.5s linear;
-	}
-	#rightContent{
-		float: right;
-		width: 80%;
-		padding: 20px;
-		height: 100%;
-		background-color: white;
-		animation: myLoad 0.5s linear;
-		
-	}
-	@keyframes myLoad {
-		0%{
-			width: 70%;
-			opacity:0.5;
-			}
-        100%{
-        	width: 80%;
-        	opacity:1;
-       		}
-	}
-	@keyframes menuLoad {
-		0%{
-			width: 10%;
-			opacity:0.5;
-			}
-        100%{
-        	width: 15%;
-        	opacity:1;
-       		}
-	}
-	li{
-		list-style-type: none;
-		padding: 10px;
-		padding-left: 20px;
-		margin: 0px;
-	}
-	li:hover{
-		background: #009688;
-	}
-	ul{
-		margin: 0px;
-		padding: 0px;
-	}
-	ul a{
-		text-decoration: none;
-		color: #FFFFFF;
-	}
-	table{
-		border: 1px solid #E6E6E6;
-		border-collapse: collapse;
-		color: #666666;
-	}
-	tr:first-child{
-		background: #F2F2F2;
-	}
-	tr:hover{
-		background: #F2F2F2;
-	}
-	td{
-		border: 1px solid #E6E6E6;
-		padding: 10px;
-		padding-right: 100px;
-	}
-	table a{
-		color: #666666;
-		text-decoration: none;
-	}
-</style>
-<!--<script type="text/javascript" src="css/protect.js"></script>
--->
+<link rel="stylesheet" href="css/index.css"/>
 <script src="css/jquery-3.2.1.min.js"></script>
 <script>
 	//接受url参数
@@ -103,21 +13,26 @@
 	     var r = window.location.search.substr(1).match(reg);
 	     if(r!=null)return  unescape(r[2]); return null;
 	}
-	
 	$(function(){
-		//判断接受参数，如果没有参数，就直接显示小组成员
-		var $action = GetQueryString("action");
-		if($action==null || $action==1){
+		//点击小组成员
+		$("#cy").click(function(){
 			$.get("GroupMembers.html",function(val){
 				$("#rightContent").html(val);
-				$("li:first").css("background","#009688");
+				$("#menu a li").css("background","rgba(0,0,0,0)");
+				$("#menu a:first li").css("background","#009688");
 			});
-		}else if($action==2){
-			//参数为2选择笔记
-			$("li:nth-child(2)").css("background","#009688");
-		}
+		});
 		
+		//点击笔记
+		$("#bj").click(function(){
+			$.get("ArticleList/index.html",function(val){
+				$("#rightContent").html(val);
+				$("#menu a li").css("background","rgba(0,0,0,0)");
+				$("#menu a:nth-child(2) li").css("background","#009688");
+			});
+		});
 		
+		$("#cy").trigger("click");
 	});
 </script>
 </head>
@@ -125,13 +40,21 @@
 <body>
 		<div id="leftDiv">
 			<h2 style="margin-left: 20px;">菜单</h2>
-			<ul>
-				<li>小组成员</li>
-				<li>笔记</li>
-				<li><a href="https://6gqq.cn/?page_id=22">关于我</a></li>
+			<ul id="menu">
+				<a>
+					<li id="cy">小组成员</li>
+				</a>
+				<a>
+					<li id="bj">笔记</li>
+				</a>
+				<a href="https://6gqq.cn/?page_id=22">
+					<li>关于我</li>
+				</a>
 			</ul>
 		</div>
 		<div id="rightContent">
+			
+			
 			
 		</div>
 		<div style="clear: both;"></div>
