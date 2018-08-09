@@ -18,6 +18,13 @@
 		<script src="../css/showdown.min.js"></script>
 	</head>
 	<script>
+		//接受url参数
+		function GetQueryString(name)
+		{
+		     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+		     var r = window.location.search.substr(1).match(reg);
+		     if(r!=null)return  unescape(r[2]); return null;
+		}
 		//显示文章的方法
 		function show(val){
 			//隐藏文章列表
@@ -40,19 +47,8 @@
 		$(function(){
 			$.get("ArticleList/list.html",function(data){
 				$.each(data, function(i,v) {
-					var wburl = "ArticleList/atlist/"+v.content;
-					//通过ajax获取文本内容
-					$.ajax({
-						type:"get",
-						url:wburl,
-						async:true,
-						success:function(retxt){
-							txt = retxt;
-							
-							var lb = "<a href='javascript:show("+i+")'><li id='"+i+"'><span class='liTitle'>"+v.title+"</span><span class='liContent'>"+txt.substr(0,60)+"</span><span class='liDate'>"+v.date+"</span></li></a>";
-							$("#arlist > ul").append(lb);
-						}
-					});
+					var lb = "<a href='javascript:show("+i+")'><li id='"+i+"'><span class='liTitle'>"+v.title+"</span><span class='liDate'>"+v.date+"</span></li></a>";
+					$("#arlist > ul").append(lb);
 				});
 			},"json");
 			

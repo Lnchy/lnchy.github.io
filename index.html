@@ -3,16 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>我的主页</title>
-<link rel="stylesheet" href="css/index.css?v=1.0"/>
+<link rel="stylesheet" href="css/index.css"/>
 <script src="css/jquery-3.2.1.min.js"></script>
 <script>
-	//接受url参数
-	function GetQueryString(name)
-	{
-	     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-	     var r = window.location.search.substr(1).match(reg);
-	     if(r!=null)return  unescape(r[2]); return null;
-	}
 	$(function(){
 		//点击小组成员
 		$("#cy").click(function(){
@@ -53,8 +46,6 @@
 			</ul>
 		</div>
 		<div id="rightContent">
-			
-			
 			
 		</div>
 		<div style="clear: both;"></div>
