@@ -14,7 +14,8 @@
 				cursor: pointer;
 			}
 			#selectPage{
-				margin: 10px auto;
+				position: absolute;
+				top: 560px;
 				font-size: 14px;
 			}
 			#selectPage>.pageNum:hover{
@@ -180,13 +181,6 @@
 			<ul id="Alist" >
 			</ul>
 			
-			<div id="selectPage">
-				<div class="pageUp">上一页</div>
-				<div class="nowPage">1</div>
-				<div class="pageNext">下一页</div>
-				<div style="clear: both;"></div>
-			</div>
-			
 			<div id="wz" style="width: 90%; margin: 0px auto;display: none;position: relative;bottom: 0px;">
 				<div id="fanhui"></div>
 				<h1 id="wztitle" style="margin: 0px auto;width: 80%;"></h1>
@@ -196,6 +190,13 @@
 				<hr>
 			</div>
 			
+		</div>
+		
+		<div id="selectPage">
+				<div class="pageUp">上一页</div>
+				<div class="nowPage">1</div>
+				<div class="pageNext">下一页</div>
+				<div style="clear: both;"></div>
 		</div>
 	</body>
 </html>
