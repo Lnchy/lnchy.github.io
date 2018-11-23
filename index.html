@@ -1,54 +1,20 @@
-﻿<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang=en>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Lnchy的Blog</title>
-<link rel="stylesheet" href="css/md.css?v=1.0"/>
-<link rel="stylesheet" href="css/index.css"/>
-<script src="css/jquery-3.2.1.min.js"></script>
-<script>
-	$(function(){
-		//点击小组成员
-		$("#cy").click(function(){
-			$.get("GroupMembers.html",function(val){
-				$("#rightContent").html(val);
-				$("#menu a li").css("background","rgba(0,0,0,0)");
-				$("#menu a:first li").css("background","#009688");
-			});
-		});
-		
-		//点击笔记
-		$("#bj").click(function(){
-			$.get("ArticleList/index.html",function(val){
-				$("#rightContent").html(val);
-				$("#menu a li").css("background","rgba(0,0,0,0)");
-				$("#menu a:nth-child(2) li").css("background","#009688");
-			});
-		});
-		
-		$("#cy").trigger("click");
-	});
-</script>
+    <meta charset=utf-8>
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <meta name=viewport content="width=device-width,initial-scale=1">
+     <title>Lnchy的博客</title>
+    <link href=/css/app.e42c4a71.css rel=preload as=style>
+    <link href=/css/chunk-vendors.e21aa047.css rel=preload as=style>
+    <link href=/js/app.93a5b8f4.js rel=preload as=script>
+    <link href=/js/chunk-vendors.4f32065e.js rel=preload as=script>
+    <link href=/css/chunk-vendors.e21aa047.css rel=stylesheet>
+    <link href=/css/app.e42c4a71.css rel=stylesheet>
 </head>
 
-<body>
-		<div id="leftDiv">
-			<h2 style="margin-left: 20px;">菜单</h2>
-			<ul id="menu">
-				<a href="#">
-					<li id="cy">小组成员</li>
-				</a>
-				<a href="#">
-					<li id="bj">笔记</li>
-				</a>
-				<a href="https://6gqq.cn/?page_id=22">
-					<li>关于我</li>
-				</a>
-			</ul>
-		</div>
-		<div id="rightContent">
-			
-		</div>
-		<div style="clear: both;"></div>
-</body>
-</html>
+<body><noscript><strong>We're sorry but myblog doesn't work properly without JavaScript enabled. Please enable it to
+            continue.</strong></noscript>
+    <div id=app></div>
+    <script src=/js/chunk-vendors.4f32065e.js> </script> <script src=/js/app.93a5b8f4.js> </script> </body> </html>

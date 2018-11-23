@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>文章列表</title>
+		<style>
+			#fanhui{
+				width: 30px;
+				height: 30px;
+				background: url(css/return.png);
+				background-size: 30px 30px;
+				position: absolute;
+				top:10px;
+				cursor: pointer;
+			}
+			#selectPage{
+				position: absolute;
+				top: 560px;
+				font-size: 14px;
+			}
+			#selectPage>.pageNum:hover{
+				color: #009688;
+			}
+			.pageUp{
+				height: 30px;
+				width: 70px;
+				border: 1px solid #E2E2E2;
+				text-align: center;
+				line-height: 30px;
+				cursor: pointer;
+				border-radius: 5px 0px 0px 5px;
+				float: left;
+			}
+			.pageNext{
+				height: 30px;
+				width: 70px;
+				border: 1px solid #E2E2E2;
+				border-left: 0px;
+				text-align: center;
+				line-height: 30px;
+				cursor: pointer;
+				border-radius: 0px 5px 5px 0px;
+				float: left;
+			}
+			.pageNum{
+				height: 30px;
+				width: 40px;
+				border: 1px solid #E2E2E2;
+				border-left: 0px;
+				text-align: center;
+				line-height: 30px;
+				cursor: pointer;
+				float: left;
+			}
+			.nowPage{
+				height: 30px;
+				width: 40px;
+				border: 1px solid #E2E2E2;
+				border-left: 0px;
+				text-align: center;
+				line-height: 30px;
+				cursor: pointer;
+				float: left;
+				
+				background: #009688;
+				color: #FFFFFF;
+				cursor: no-drop;
+			}
+			.nowPage:hover{
+				background: #009688;
+				color: #FFFFFF;
+				cursor: no-drop;
+			}
+		</style>
+		<script src="../css/showdown.min.js"></script>
+	</head>
+	<script>
+		/*
+		//接受url参数
+		function GetQueryString(name)
+		{
+		     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+		     var r = window.location.search.substr(1).match(reg);
+		     if(r!=null)return  unescape(r[2]); return null;
+		}
+		*/
+		
+		
+		//存放列表数据
+		var listJson = null;
+		//存放当前页数
+		var nowPage = 1;
+		//列表显示一个页面显示几个文章
+		var listNum = 6;
+		
+		
+		//显示文章的方法
+		function show(val){
+			//隐藏文章列表
+			$("#Alist").fadeOut(100);
+			//隐藏页面选择列表
+			$("#selectPage").fadeOut(100);
+			//显示文章
+			$("#wz").fadeIn(300);
+			//获取文章内容
+			$.get("ArticleList/atlist/"+listJson[val].content,function(articeContent){
+				//初始化转换器
+				var converter = new showdown.Converter();
+				//放入文章内容
+				$("#wzcontent").html(converter.makeHtml(articeContent));
+				//放入文章标题
+				$("#wztitle").text(listJson[val].title);
+				//放入文章日期
+				$("#wzdate").text(listJson[val].date);
+			});
+		}
+		//显示文章列表
+		function showList(pageNum){
+			//设置第几页
+			nowPage = pageNum;
+			//先把列表清空
+			$("#Alist").html("");
+			//计算出从第几个开始
+			var starList = (pageNum-1)*listNum;
+			for (var i = starList; i < starList + listNum; i++) {
+				//有才循环，没有就不循环
+				if(listJson[i]){
+					var lb = "<a href='javascript:show("+i+")'><li id='"+i+"'><span class='liTitle'>"+listJson[i].title+"</span><span class='liDate'>"+listJson[i].date+"</span></li></a>";
+					$("#Alist").append(lb);
+				}
+			}
+			//刷新选择页面列表
+			showSelectList();
+		}
+		//显示翻页列表
+		function showSelectList(){
+			//计算总页数
+			var sumPage = listJson.length/listNum==0?(listJson.length%listNum):(Math.ceil(listJson.length/listNum));
+			//清空div
+			$("#selectPage").html("");
+			if(nowPage==1){
+				$("#selectPage").append("<div class='pageUp' style='color: #888888;cursor: no-drop;'>上一页</div>");
+			}else{
+				$("#selectPage").append("<div class='pageUp' onclick='showList(nowPage - 1)'>上一页</div>");
+			}
+			
+			for(var i=1;i<=sumPage;i++){
+				if(i==nowPage){
+					$("#selectPage").append("<div class='nowPage'>"+i+"</div>");
+				}else{
+					$("#selectPage").append("<div class='pageNum' onclick='showList("+i+")'>"+i+"</div>");
+				}
+			}
+			if(nowPage==sumPage){
+				$("#selectPage").append("<div class='pageNext' style='color: #888888;cursor: no-drop;'>下一页</div>");
+			}else{
+				$("#selectPage").append("<div class='pageNext' onclick='showList(nowPage + 1)'>下一页</div>");
+			}
+		}
+		
+		$(function(){
+			//初始化的时候把取到的列表放入变量
+			$.get("ArticleList/list.html",function(data){
+				listJson = data;
+				//显示当前分页列表
+				showList(nowPage);
+				//显示页面选择列表
+				showSelectList();
+			},"json");
+			
+			//点击隐藏文章并返回列表
+			$("#fanhui").click(function(){
+				$("#wz").fadeOut(300);
+				$("#selectPage").fadeIn(100);
+				$("#Alist").fadeIn(300);
+			});
+		})
+	</script>
+	<body>
+		<div id="arlist">
+			<ul id="Alist" >
+			</ul>
+			
+			<div id="wz" style="width: 90%; margin: 0px auto;display: none;position: relative;bottom: 0px;">
+				<div id="fanhui"></div>
+				<h1 id="wztitle" style="margin: 0px auto;width: 80%;"></h1>
+				<h5 id="wzdate" style="color: #666666;margin-left: 10%;"></h5>
+				<hr>
+				<p id="wzcontent" style="min-height: 700px;"></p>
+				<hr>
+			</div>
+			
+		</div>
+		
+		<div id="selectPage">
+				<div class="pageUp">上一页</div>
+				<div class="nowPage">1</div>
+				<div class="pageNext">下一页</div>
+				<div style="clear: both;"></div>
+		</div>
+	</body>
+</html>
